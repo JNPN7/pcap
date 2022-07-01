@@ -7,8 +7,6 @@ use std::ffi::CString;
 // use ifstructs::ifreq;
 
 fn main() {
-
-    
     sniff();
     println!("Hello, world!");
 }
