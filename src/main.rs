@@ -146,7 +146,7 @@ impl Header {
        for i in 0..6 {
            print!("{:X} ", &self.source_mac[i]);    
        }
-       print!("\nType: {} {}", &self.typ[0], &self.typ[1]);
+       print!("\nType: {:X} {:X}", &self.typ[0], &self.typ[1]);
    }
    fn ip(&self) {
        print!("\nSource ip: ");
