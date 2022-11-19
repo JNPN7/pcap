@@ -29,26 +29,13 @@ impl Packet {
                 None
             },
             Protocol::Ipv4(ipv4) => {
-                // println!("ipv4 | protocol => {:?}", ipv4.protocol());
                 Some(Transport::new(&pac[start..], ipv4.protocol()))
             },
             Protocol::Ipv6(ipv6) => {
-                // println!("ipv6 | protocol => {:?}", ipv6.nxt_header());
                 Some(Transport::new(&pac[start..], ipv6.nxt_header()))
             },
-            // _ => panic!("Packet new function need to work")
         };
         
-        // let application: Option<Application> = if let Some(transport) = transport {
-        //     start += transport.header_len();
-        //     if pac.len() > start {
-        //          Some(Application::new(&pac[start..]))
-        //     }
-        //     None
-        // } else {
-        //     None
-        // };
-
         let application: Option<Application> = match &transport {
             None => None,
             Some(t) => {

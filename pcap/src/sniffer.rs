@@ -4,7 +4,7 @@ use std::ffi::CString;
 use packet_parser::*;
 use super::logger::log;
 
-pub fn sniff() {
+pub fn sniff(log_file_path: &str) {
     let mut buffer: [u8; 2048] = [0; 2048];
     
     // socket(AF_INET6, SOCK_DGRAM, 17)
@@ -24,7 +24,6 @@ pub fn sniff() {
             exit(1);
         }
     }
-    // println!("{}", sock);
 
     loop {
         let no_of_bytes = match recv(sock, &mut buffer, MsgFlags::empty()) {
@@ -34,12 +33,9 @@ pub fn sniff() {
                 continue;
             }
         };
-        // for i in 0..no_of_bytes {
-        //     print!("{:X} ", buffer[i]);
-        // }
-        let packet: Packet = Packet::new(&buffer[..no_of_bytes]); // error caused
-        // no_of_bytes is not giving the right value it's causing may be caused by mixed libc and nix
+
+        let packet: Packet = Packet::new(&buffer[..no_of_bytes]);
         
-        log(&packet).expect("error error danger");
+        log(&packet, &log_file_path).expect("error error danger");
     }
 }

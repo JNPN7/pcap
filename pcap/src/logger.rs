@@ -44,23 +44,20 @@ fn get_csv(pac: &Packet) -> String {
     format!("\n{}, {}, {}, {}, {}", src_mac, dst_mac, src_ip, dst_ip, protocol)
 }
 
-pub fn log(pac: &Packet) -> Result<(), Box<dyn Error>>{
-    const FILEPATH: &str = "/home/juhel/tmp/major_project/logi.txt";
-    // let path = Path::new(FILEPATH);
+pub fn log(pac: &Packet, filepath: &str) -> Result<(), Box<dyn Error>>{
     let log =  get_csv(pac);
-    // println!("{}", log);
 
-    if !std::path::Path::new(FILEPATH).exists() {
+    if !std::path::Path::new(filepath).exists() {
         let header = "src_mac, dst_mac, src_ip, dst_ip, protocol";
-        let mut file = File::create(FILEPATH)?;
+        let mut file = File::create(filepath)?;
         file.write_all(header.as_bytes())?;
     }
 
     let mut f = fs::OpenOptions::new()
         .write(true)
-        .append(true) // This is needed to append to file
-        .open(FILEPATH)?;
-    // or
+        .append(true)
+        .open(filepath)?;
+
     f.write_all(log.as_bytes())?;
     Ok(())
 }
