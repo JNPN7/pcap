@@ -39,9 +39,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "packet-parser"
+version = "0.1.0"
+
+[[package]]
 name = "pcap"
 version = "0.1.0"
 dependencies = [
  "libc",
  "nix",
+ "packet-parser",
 ]
